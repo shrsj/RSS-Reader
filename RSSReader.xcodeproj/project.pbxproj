@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C4CFF8691C1EBDBB0029FD90 /* TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CFF8681C1EBDBB0029FD90 /* TableViewCell.m */; settings = {ASSET_TAGS = (); }; };
-		C4CFF8701C1EC8B00029FD90 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CFF86F1C1EC8B00029FD90 /* DetailViewController.m */; settings = {ASSET_TAGS = (); }; };
+		C4CFF8691C1EBDBB0029FD90 /* TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CFF8681C1EBDBB0029FD90 /* TableViewCell.m */; };
+		C4CFF8701C1EC8B00029FD90 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CFF86F1C1EC8B00029FD90 /* DetailViewController.m */; };
+		C4DDAA9B1C28327A0028963A /* PageContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4DDAA9A1C28327A0028963A /* PageContentViewController.m */; };
 		C4E3963A1C19BD8E007EC929 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C4E396391C19BD8E007EC929 /* main.m */; };
 		C4E3963D1C19BD8E007EC929 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C4E3963C1C19BD8E007EC929 /* AppDelegate.m */; };
 		C4E396401C19BD8E007EC929 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4E3963F1C19BD8E007EC929 /* ViewController.m */; };
@@ -17,9 +18,9 @@
 		C4E396481C19BD8E007EC929 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4E396461C19BD8E007EC929 /* LaunchScreen.storyboard */; };
 		C4E396531C19BD8E007EC929 /* RSSReaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C4E396521C19BD8E007EC929 /* RSSReaderTests.m */; };
 		C4E3965E1C19BD8E007EC929 /* RSSReaderUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C4E3965D1C19BD8E007EC929 /* RSSReaderUITests.m */; };
-		C4E5D70A1C1A9DAE001C2798 /* SubmitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4E5D7091C1A9DAE001C2798 /* SubmitViewController.m */; settings = {ASSET_TAGS = (); }; };
-		C4E5D70D1C1AA3A9001C2798 /* ContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4E5D70C1C1AA3A9001C2798 /* ContactViewController.m */; settings = {ASSET_TAGS = (); }; };
-		C4E5D7111C1AA46C001C2798 /* FeedsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4E5D7101C1AA46C001C2798 /* FeedsViewController.m */; settings = {ASSET_TAGS = (); }; };
+		C4E5D70A1C1A9DAE001C2798 /* SubmitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4E5D7091C1A9DAE001C2798 /* SubmitViewController.m */; };
+		C4E5D70D1C1AA3A9001C2798 /* ContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4E5D70C1C1AA3A9001C2798 /* ContactViewController.m */; };
+		C4E5D7111C1AA46C001C2798 /* FeedsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4E5D7101C1AA46C001C2798 /* FeedsViewController.m */; };
 		C4E5D7161C1AB21F001C2798 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4E5D7151C1AB21F001C2798 /* MessageUI.framework */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +46,8 @@
 		C4CFF8681C1EBDBB0029FD90 /* TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewCell.m; sourceTree = "<group>"; };
 		C4CFF86E1C1EC8B00029FD90 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		C4CFF86F1C1EC8B00029FD90 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		C4DDAA991C28327A0028963A /* PageContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageContentViewController.h; sourceTree = "<group>"; };
+		C4DDAA9A1C28327A0028963A /* PageContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageContentViewController.m; sourceTree = "<group>"; };
 		C4E396351C19BD8E007EC929 /* RSSReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSSReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4E396391C19BD8E007EC929 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C4E3963B1C19BD8E007EC929 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -134,6 +137,8 @@
 				C4E5D7101C1AA46C001C2798 /* FeedsViewController.m */,
 				C4CFF86E1C1EC8B00029FD90 /* DetailViewController.h */,
 				C4CFF86F1C1EC8B00029FD90 /* DetailViewController.m */,
+				C4DDAA991C28327A0028963A /* PageContentViewController.h */,
+				C4DDAA9A1C28327A0028963A /* PageContentViewController.m */,
 				C4E396411C19BD8E007EC929 /* Main.storyboard */,
 				C4E396441C19BD8E007EC929 /* Assets.xcassets */,
 				C4E396461C19BD8E007EC929 /* LaunchScreen.storyboard */,
@@ -301,6 +306,7 @@
 			files = (
 				C4E5D70D1C1AA3A9001C2798 /* ContactViewController.m in Sources */,
 				C4CFF8701C1EC8B00029FD90 /* DetailViewController.m in Sources */,
+				C4DDAA9B1C28327A0028963A /* PageContentViewController.m in Sources */,
 				C4E5D70A1C1A9DAE001C2798 /* SubmitViewController.m in Sources */,
 				C4E5D7111C1AA46C001C2798 /* FeedsViewController.m in Sources */,
 				C4E396401C19BD8E007EC929 /* ViewController.m in Sources */,
