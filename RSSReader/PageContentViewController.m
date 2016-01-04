@@ -22,8 +22,12 @@
     
     NSString *link = [self.webUrl stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     
-    NSURL *myURL = [NSURL URLWithString: [link stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    
+   // NSURL *myURL = [NSURL URLWithString: [link stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSCharacterSet *customCharacterset = [[NSCharacterSet characterSetWithCharactersInString:@" "] invertedSet];
+    NSURL *myURL = [NSURL URLWithString: [link stringByAddingPercentEncodingWithAllowedCharacters:customCharacterset]];
     NSURLRequest *request = [NSURLRequest requestWithURL:myURL];
+   // NSURLRequest *request = [NSURLRequest requestWithURL:myURL cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:300];
     [self.detailWebView loadRequest:request];
     self.detailWebView.paginationMode = UIWebPaginationModeTopToBottom;
     self.detailWebView.paginationBreakingMode = UIWebPaginationBreakingModePage;

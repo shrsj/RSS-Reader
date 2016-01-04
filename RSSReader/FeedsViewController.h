@@ -11,5 +11,7 @@
 @interface FeedsViewController : UITableViewController <NSXMLParserDelegate,UINavigationControllerDelegate,UITableViewDelegate>
 
 @property (strong,nonatomic) NSString *url;
+@property (nonatomic, strong) NSCache *imageCache;
+
 
 @end
