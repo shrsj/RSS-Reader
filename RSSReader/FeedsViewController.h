@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MBProgressHUD.h"
 
-@interface FeedsViewController : UITableViewController <NSXMLParserDelegate,UINavigationControllerDelegate,UITableViewDelegate>
+@interface FeedsViewController : UITableViewController <NSXMLParserDelegate,UINavigationControllerDelegate,UITableViewDelegate,MBProgressHUDDelegate>
 
 @property (strong,nonatomic) NSString *url;
 @property (nonatomic, strong) NSCache *imageCache;
