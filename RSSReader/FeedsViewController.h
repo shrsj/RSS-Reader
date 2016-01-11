@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "MBProgressHUD.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
-@interface FeedsViewController : UITableViewController <NSXMLParserDelegate,UINavigationControllerDelegate,UITableViewDelegate,MBProgressHUDDelegate>
+
+@interface FeedsViewController : UITableViewController <NSXMLParserDelegate,UINavigationControllerDelegate,UITableViewDelegate,MBProgressHUDDelegate,SDWebImageManagerDelegate>
 
 @property (strong,nonatomic) NSString *url;
 @property (nonatomic, strong) NSCache *imageCache;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndi;
 
 
 @end

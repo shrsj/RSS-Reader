@@ -8,7 +8,11 @@
 
 #import "FeedsViewController.h"
 #import "DetailViewController.h"
-#import <SDWebImage/UIImageView+WebCache.h>
+#import "FeedsTableViewCell.h"
+
+
+#define kAppIconHeight 100
+#define kAppIconWidth 70
 
 @interface FeedsViewController ()
 {
@@ -34,7 +38,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.imageCache = [[NSCache alloc] init];                                                                   //Initialise image cache
+    self.imageCache = [[NSCache alloc] init];                                                                 //Initialise image cache
+    
+    
     // The hud will dispable all input on the view (use the higest view possible in the view hierarchy)
     HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
     [self.navigationController.view addSubview:HUD];
@@ -43,30 +49,39 @@
     HUD.labelText = @"Loading...";
     [self.view.window addSubview:HUD];
     feeds = [[NSMutableArray alloc] init];
-    //NSInvocationOperation *op = [[NSInvocationOperation alloc ] initWithTarget:self selector:@selector(loadfeeds) object:Nil];
     NSLog(@"starting progress bar");
-    NSOperationQueue* aQueue = [[NSOperationQueue alloc] init];
-    [aQueue addOperationWithBlock:^{
-        
-        [self loadfeeds];
-        //[NSObject performSelectorInBackground:@selector(loadfeeds) withObject:Nil];
-        //-[NSObject performSelectorOnMainThread:withObject:waitUntilDone:]
-        
-    }];
-    //[HUD showWhileExecuting:@selector(loadfeeds) onTarget:self withObject:Nil animated:YES];
-    //[HUD sho
+    
+    //NSInvocationOperation *op = [[NSInvocationOperation alloc ] initWithTarget:self selector:@selector(loadfeeds) object:Nil];
+    /*  NSOperationQueue* aQueue = [[NSOperationQueue alloc] init];
+     [aQueue addOperationWithBlock:^{
+     
+     [self loadfeeds];
+     [NSObject performSelectorInBackground:@selector(loadfeeds) withObject:Nil];
+     [NSObject performSelectorOnMainThread:withObject:waitUntilDone:]
+     
+     }];*/
+    // [HUD showWhileExecuting:@selector(loadfeeds) onTarget:self withObject:Nil animated:YES];
+    //self.activityIndi.frame = CGRectMake(200, 200, 20, 20);
+    //[self.tableView addSubview:self.activityIndi];
+    [self loadfeeds];
 }
 
 -(void)loadfeeds
 {
-    NSLog(@"Beginning operation.\n");
-    // Do some work.
-    NSURL *url = [NSURL URLWithString:self.url];
-    parser = [[NSXMLParser alloc] initWithContentsOfURL:url];
-    [parser setDelegate:self];
-    [parser setShouldResolveExternalEntities:NO];
-    NSLog(@"parsing started in block");
-    [parser parse];
+    NSOperationQueue* aQueue = [[NSOperationQueue alloc] init];
+    [aQueue addOperationWithBlock:^{
+        [self.activityIndi startAnimating];
+        NSLog(@"Beginning operation.\n");
+        // Do some work.
+        NSURL *url = [NSURL URLWithString:self.url];
+        parser = [[NSXMLParser alloc] initWithContentsOfURL:url];
+        [parser setDelegate:self];
+        [parser setShouldResolveExternalEntities:NO];
+        NSLog(@"parsing started in block");
+        [parser parse];
+        
+        
+    }];
     
 }
 - (void)didReceiveMemoryWarning {
@@ -92,8 +107,10 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    NSLog(@"cell for row at index entered");
     // NSLog(@"inside cell for row at indexpath");
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
+    FeedsTableViewCell *cell = [[FeedsTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
     cell.textLabel.numberOfLines = 1;
     cell.textLabel.text = [[feeds objectAtIndex:indexPath.row] objectForKey: @"title"];
     
@@ -105,17 +122,40 @@
     NSString *linked = [[feeds objectAtIndex:indexPath.row] objectForKey:@"content:encoded"];
     NSURL *iurl = [NSURL URLWithString:linked];
     // NSString *path = [NSString stringWithFormat:@"%ld",(long)[indexPath row]];
-    NSData *imageData = [NSData dataWithContentsOfURL:iurl];
+    //NSData *imageData = [NSData dataWithContentsOfURL:iurl];
     
-    if (imageData)
-    {
-        [cell.imageView sd_setImageWithURL:iurl placeholderImage:[UIImage imageNamed:@"no image"]];
-    }
-    else
-    {
-        cell.imageView.image = [UIImage imageNamed:@"no image"];
-    }
-    
+    [cell.imageView sd_setImageWithURL:iurl placeholderImage:[UIImage imageNamed:@"no image"]];
+    /* SDWebImageDownloader *downloader = [SDWebImageDownloader sharedDownloader];
+     [downloader downloadImageWithURL:iurl
+     options:0
+     progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+     // progression tracking code
+     [cell.imageView setImage:[UIImage imageNamed:@"no image"]];
+     }
+     completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+     if (image && finished) {
+     // do something with image
+     [cell.imageView setImage:image];
+     }
+     }];*/
+    /*
+     [SDWebImageDownloader.sharedDownloader downloadImageWithURL:iurl
+     options:0
+     progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+     // progression tracking code
+     [cell.imageView setImage:[UIImage imageNamed:@"no image"]];
+     }
+     completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished)
+     {
+     if (cell.tag == indexPath.row && image && finished)
+     {
+     dispatch_async(dispatch_get_main_queue(), ^(){
+     cell.imageView.image = image;
+     });
+     
+     }
+     }];
+     */
     return cell;
 }
 
@@ -206,8 +246,15 @@
 - (void)parserDidEndDocument:(NSXMLParser *)parser
 {
     NSLog(@"parsing started didend document in block");
-    [self.tableView reloadData];
+    //[self.tableView reloadData];
+    
     NSLog(@"Reload Complete");
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+        [self.activityIndi stopAnimating];
+        self.activityIndi.hidden = TRUE;
+        [self.activityIndi removeFromSuperview];
+    });
     
 }
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

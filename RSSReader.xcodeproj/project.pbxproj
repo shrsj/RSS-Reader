@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C40A6D731C3D01E500B731DA /* rssCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C40A6D721C3D01E500B731DA /* rssCollectionViewCell.m */; };
 		C40A6D751C3D347D00B731DA /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C40A6D741C3D347D00B731DA /* ImageIO.framework */; };
+		C45107761C43908F00325ADD /* FeedsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C45107751C43908F00325ADD /* FeedsTableViewCell.m */; };
 		C4664E541C3F973400830620 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4664E531C3F973400830620 /* Assets.xcassets */; };
 		C4664E561C3FBBBE00830620 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = C4664E551C3FBBBE00830620 /* loading.gif */; };
 		C4CFF8691C1EBDBB0029FD90 /* TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CFF8681C1EBDBB0029FD90 /* TableViewCell.m */; };
@@ -52,6 +53,8 @@
 		C40A6D711C3D01E500B731DA /* rssCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rssCollectionViewCell.h; sourceTree = "<group>"; };
 		C40A6D721C3D01E500B731DA /* rssCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = rssCollectionViewCell.m; sourceTree = "<group>"; };
 		C40A6D741C3D347D00B731DA /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		C45107741C43908F00325ADD /* FeedsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedsTableViewCell.h; sourceTree = "<group>"; };
+		C45107751C43908F00325ADD /* FeedsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedsTableViewCell.m; sourceTree = "<group>"; };
 		C4664E531C3F973400830620 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = RSSReader/Assets.xcassets; sourceTree = "<group>"; };
 		C4664E551C3FBBBE00830620 /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
 		C4CFF8671C1EBDBB0029FD90 /* TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewCell.h; sourceTree = "<group>"; };
@@ -173,6 +176,8 @@
 				C4E5D7091C1A9DAE001C2798 /* SubmitViewController.m */,
 				C4E5D70B1C1AA3A9001C2798 /* ContactViewController.h */,
 				C4E5D70C1C1AA3A9001C2798 /* ContactViewController.m */,
+				C45107741C43908F00325ADD /* FeedsTableViewCell.h */,
+				C45107751C43908F00325ADD /* FeedsTableViewCell.m */,
 				C4E5D70F1C1AA46C001C2798 /* FeedsViewController.h */,
 				C4E5D7101C1AA46C001C2798 /* FeedsViewController.m */,
 				C4CFF86E1C1EC8B00029FD90 /* DetailViewController.h */,
@@ -404,6 +409,7 @@
 				C40A6D731C3D01E500B731DA /* rssCollectionViewCell.m in Sources */,
 				C4E5D7111C1AA46C001C2798 /* FeedsViewController.m in Sources */,
 				C4CFF8691C1EBDBB0029FD90 /* TableViewCell.m in Sources */,
+				C45107761C43908F00325ADD /* FeedsTableViewCell.m in Sources */,
 				C4E3963D1C19BD8E007EC929 /* AppDelegate.m in Sources */,
 				C4E3963A1C19BD8E007EC929 /* main.m in Sources */,
 			);
