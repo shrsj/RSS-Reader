@@ -1,4 +1,4 @@
-//
+
 //  FeedsViewController.m
 //  RSSReader
 //
@@ -8,6 +8,11 @@
 
 #import "FeedsViewController.h"
 #import "DetailViewController.h"
+#import "FeedsTableViewCell.h"
+
+
+#define kAppIconHeight 100
+#define kAppIconWidth 70
 
 @interface FeedsViewController ()
 {
@@ -22,7 +27,6 @@
     NSMutableString *previewImage;
     NSString *previewImage1;
     NSMutableString *subtitle;
-    
 }
 
 @end
@@ -33,12 +37,28 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    self.imageCache = [[NSCache alloc] init];
     feeds = [[NSMutableArray alloc] init];
-    NSURL *url = [NSURL URLWithString:self.url];
-    parser = [[NSXMLParser alloc] initWithContentsOfURL:url];
-    [parser setDelegate:self];
-    [parser setShouldResolveExternalEntities:NO];
-    [parser parse];
+    [self loadfeeds];
+}
+
+-(void)loadfeeds
+{
+    NSOperationQueue* aQueue = [[NSOperationQueue alloc] init];
+    [aQueue addOperationWithBlock:^{
+        [self.activityIndi startAnimating];
+        NSLog(@"Beginning operation.\n");
+        // Do some work.
+        NSURL *url = [NSURL URLWithString:self.url];
+        parser = [[NSXMLParser alloc] initWithContentsOfURL:url];
+        [parser setDelegate:self];
+        [parser setShouldResolveExternalEntities:NO];
+        NSLog(@"parsing started in block");
+        [parser parse];
+        
+        
+    }];
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -63,30 +83,18 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
-    // cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    // cell.textLabel.frame = CGRectMake(200, 5, 375, 25);
+    FeedsTableViewCell *cell = [[FeedsTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
     cell.textLabel.numberOfLines = 1;
     cell.textLabel.text = [[feeds objectAtIndex:indexPath.row] objectForKey: @"title"];
     
     NSString *normalSubtitle = [[feeds objectAtIndex:indexPath.row] objectForKey:@"description"];
     NSString *data= [normalSubtitle stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    //cell.detailTextLabel.frame= CGRectMake(200, 35, 375, 35);
     cell.detailTextLabel.numberOfLines = 3;
     cell.detailTextLabel.text = data;
     
     NSString *linked = [[feeds objectAtIndex:indexPath.row] objectForKey:@"content:encoded"];
     NSURL *iurl = [NSURL URLWithString:linked];
-    
-    cell.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:iurl]];
-    
-    //cell.imageView.frame = CGRectMake(15, 5, 135, 50);
-    if (cell.imageView.image == nil)
-    {
-        cell.imageView.image = [UIImage imageNamed:@"no image"];
-    }
+    [cell.imageView sd_setImageWithURL:iurl placeholderImage:[UIImage imageNamed:@"no image"]];
     return cell;
 }
 
@@ -94,16 +102,14 @@
 {
     DetailViewController *details = [[DetailViewController alloc] init];
     details.url = [feeds[indexPath.row] objectForKey:@"link"];
-    NSLog(@"%@ %ld",[feeds[indexPath.row] objectForKey:@"link"],(long)indexPath.row);
     [self performSegueWithIdentifier:@"viewDetail" sender:self];
     
 }
 
-#pragma mark delegate methods
+#pragma mark parser delegate methods
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
 {
-    
     element = elementName;
     if ([element isEqualToString:@"item"])
     {
@@ -114,6 +120,7 @@
         subtitle = [[NSMutableString alloc] init];
         previewImage = [[NSMutableString alloc] init];
         previewImage1 = [[NSString alloc] init];
+        NSLog(@"parsing started in didstartelement block %@",link);
     }
 }
 
@@ -126,10 +133,12 @@
         [item setObject:subtitle forKey:@"description"];
         [item setObject:previewImage1 forKey:@"content:encoded"];
         [feeds addObject:[item copy]];
+        NSLog(@"parsing started in did End element block");
     }
 }
 
-- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
+- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
+{
     
     if ([element isEqualToString:@"title"])
     {
@@ -153,25 +162,35 @@
             NSRange endRange = [[previewImage substringFromIndex:firstRange.location] rangeOfString:@"\" alt"];
             NSString *finalLink = [[NSString alloc] init];
             finalLink = [previewImage substringWithRange:NSMakeRange(firstRange.location, endRange.location)];
-            //NSString *finalLink = [previewImage substringWithRange:NSMakeRange(firstRange.location, endRange.location)];
             NSString *match = @"src=\"";
-            //NSString *match2 = @"\"";
             NSString *postMatch;
             NSScanner *scanner = [NSScanner scannerWithString:finalLink];
             [scanner scanString:match intoString:nil];
-            //[scanner scanString:match2 intoString:nil];
             postMatch = [finalLink substringFromIndex:scanner.scanLocation];
             NSString *finalURL = [postMatch stringByAppendingString:@""];
             previewImage1 = finalURL;
         }
         //code to capture image
+        
     }
+    NSLog(@"parsing in foundCharacters block");
+    
 }
 
 
 - (void)parserDidEndDocument:(NSXMLParser *)parser
 {
-    [self.tableView reloadData];
+    NSLog(@"parsing started didend document in block");
+    //[self.tableView reloadData];
+    
+    NSLog(@"Reload Complete");
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+        [self.activityIndi stopAnimating];
+        self.activityIndi.hidden = TRUE;
+        [self.activityIndi removeFromSuperview];
+    });
+    
 }
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {

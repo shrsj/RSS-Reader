@@ -22,35 +22,24 @@
     // Do any additional setup after loading the view.
     
     NSLog(@"%@",self.url);
-    
-    NSString *link = [self.url stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    
-    NSURL *myURL = [NSURL URLWithString: [link stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    /*if ([[UIApplication sharedApplication] canOpenURL:myURL]) {
-     [[UIApplication sharedApplication] openURL:myURL];
-     }*/
-    NSURLRequest *request = [NSURLRequest requestWithURL:myURL];
-    
-    
-    [self.detailWebView loadRequest:request];
-    self.detailWebView.paginationMode = UIWebPaginationModeTopToBottom;
-    self.detailWebView.paginationBreakingMode = UIWebPaginationBreakingModePage;
-    NSString *plabel = [NSString stringWithFormat:@" Article %ld of %lu ",(long)self.selected,(unsigned long)([self.rssfeeds count]-1)];
-    self.article.text = plabel;
     selectedRow = self.selected;
+    NSString *plabel = [NSString stringWithFormat:@" Article %ld of %lu ",((long)selectedRow+1),(unsigned long)[self.rssfeeds count]];
+    self.article.text = plabel;
+    // Create page view controller
+    self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PageViewController"];
+    self.pageViewController.dataSource = self;
+    PageContentViewController *startingViewController = [self viewControllerAtIndex:selectedRow];
+    NSArray *viewControllers = @[startingViewController];
+    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     
-    //swipe gesture
+    // Change the size of page view controller
+    self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 50);
     
-    UISwipeGestureRecognizer *swipeRight = [[UISwipeGestureRecognizer alloc ] initWithTarget:self action:@selector(slideToRightWithGestureRecognizer:)];
-    swipeRight.direction = UISwipeGestureRecognizerDirectionRight;
-    [self.detailWebView addGestureRecognizer:swipeRight];
-    swipeRight.delegate =self;
-    
-    UISwipeGestureRecognizer *swipeLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(slideToLeftWithGestureRecognizer:)];
-    swipeLeft.direction = UISwipeGestureRecognizerDirectionLeft;
-    [self.detailWebView addGestureRecognizer:swipeLeft];
-    
+    [self addChildViewController:_pageViewController];
+    [self.view addSubview:_pageViewController.view];
+    [self.pageViewController didMoveToParentViewController:self];
     self.previous.titleLabel.adjustsFontSizeToFitWidth = TRUE;
+    
     
 }
 - (void)didReceiveMemoryWarning {
@@ -62,14 +51,11 @@
     if (selectedRow > 0 && selectedRow < [self.rssfeeds count])
     {
         selectedRow = selectedRow - 1;
-        NSString *plabel = [NSString stringWithFormat:@" Article %ld of %lu ",(long)selectedRow,(unsigned long)[self.rssfeeds count]];
+        NSString *plabel = [NSString stringWithFormat:@" Article %ld of %lu ",((long)selectedRow+1),(unsigned long)[self.rssfeeds count]];
         self.article.text = plabel;
-        NSString *string = [self.rssfeeds[selectedRow] objectForKey: @"link"];
-        NSString *data= [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSURL *myURL = [NSURL URLWithString: [data stringByAddingPercentEscapesUsingEncoding:
-                                              NSUTF8StringEncoding]];
-        NSURLRequest *request = [NSURLRequest requestWithURL:myURL];
-        [self.detailWebView loadRequest:request];
+        PageContentViewController *startingViewController = [self viewControllerAtIndex:selectedRow];
+        NSArray *viewControllers = @[startingViewController];
+        [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
     }
     else{
         NSLog(@"U cant read articles before the beginning of what begins ;) ");
@@ -82,15 +68,15 @@
     if (selectedRow < ([self.rssfeeds count] -1))
     {
         selectedRow = selectedRow + 1;
-        NSString *plabel = [NSString stringWithFormat:@" Article %ld of %lu ",(long)selectedRow,(unsigned long)[self.rssfeeds count]];
+        NSString *plabel = [NSString stringWithFormat:@" Article %ld of %lu ",((long)selectedRow+1),(unsigned long)[self.rssfeeds count]];
         self.article.text = plabel;
+        
         //reload the webview
-        NSString *string = [self.rssfeeds[selectedRow] objectForKey: @"link"];
-        NSString *data= [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSURL *myURL = [NSURL URLWithString: [data stringByAddingPercentEscapesUsingEncoding:
-                                              NSUTF8StringEncoding]];
-        NSURLRequest *request = [NSURLRequest requestWithURL:myURL];
-        [self.detailWebView loadRequest:request];
+        
+        
+        PageContentViewController *startingViewController = [self viewControllerAtIndex:selectedRow];
+        NSArray *viewControllers = @[startingViewController];
+        [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
     }
     else
     {
@@ -98,48 +84,77 @@
     }
     
 }
+#pragma mark - Page View Controller Data Source
 
-#pragma mark Swipe gesture delegate methods
-
--(void)slideToRightWithGestureRecognizer:(UISwipeGestureRecognizer *)gestureRecognizer
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
+    
+    if ((selectedRow == 0) || (selectedRow == NSNotFound)) {
+        return nil;
+    }
     if (selectedRow > 0 && selectedRow < [self.rssfeeds count])
     {
-        selectedRow = selectedRow - 1;
-        NSString *plabel = [NSString stringWithFormat:@" Article %ld of %lu ",(long)selectedRow,(unsigned long)[self.rssfeeds count]];
+        selectedRow--;
+        NSString *plabel = [NSString stringWithFormat:@" Article %ld of %lu ",((long)selectedRow+1),(unsigned long)[self.rssfeeds count]];
         self.article.text = plabel;
-        NSString *string = [self.rssfeeds[selectedRow] objectForKey: @"link"];
-        NSString *data= [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSURL *myURL = [NSURL URLWithString: [data stringByAddingPercentEscapesUsingEncoding:
-                                              NSUTF8StringEncoding]];
-        NSURLRequest *request = [NSURLRequest requestWithURL:myURL];
-        [self.detailWebView loadRequest:request];
-    }
-    else{
-        NSLog(@"NOTHING");
-    }
-    
-}
-
--(void)slideToLeftWithGestureRecognizer:(UISwipeGestureRecognizer *)gestureRecognizer
-{
-    if (selectedRow < ([self.rssfeeds count] -1))
-    {
-        selectedRow = selectedRow + 1;
-        NSString *plabel = [NSString stringWithFormat:@" Article %ld of %lu ",(long)selectedRow,(unsigned long)[self.rssfeeds count]];
-        self.article.text = plabel;
-        //reload the webview
-        NSString *string = [self.rssfeeds[selectedRow] objectForKey: @"link"];
-        NSString *data= [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSURL *myURL = [NSURL URLWithString: [data stringByAddingPercentEscapesUsingEncoding:
-                                              NSUTF8StringEncoding]];
-        NSURLRequest *request = [NSURLRequest requestWithURL:myURL];
-        [self.detailWebView loadRequest:request];
+        return [self viewControllerAtIndex:selectedRow];
     }
     else
     {
-        NSLog(@"Hello boss no more articles !!!");
+        return nil;
     }
 }
+
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
+{
+    
+    
+    if (selectedRow == NSNotFound) {
+        return nil;
+    }
+    
+    selectedRow++;
+    if (selectedRow == [self.rssfeeds count]) {
+        return nil;
+    }
+    if (selectedRow < [self.rssfeeds count])
+    {
+        NSString *plabel = [NSString stringWithFormat:@" Article %ld of %lu ",((long)selectedRow+1),(unsigned long)[self.rssfeeds count]];
+        self.article.text = plabel;
+        return [self viewControllerAtIndex:selectedRow];
+    }
+    else{
+        return nil;
+    }
+}
+
+- (PageContentViewController *)viewControllerAtIndex:(NSUInteger)index
+{
+    if (([self.rssfeeds count] == 0) || (index >= [self.rssfeeds count]))
+    {
+        return nil;
+    }
+    
+    // Create a new view controller and pass suitable data.
+    PageContentViewController *pageContentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PageContentViewController"];
+    pageContentViewController.webUrl = [self.rssfeeds[index] objectForKey:@"link"];
+    pageContentViewController.rssfeeds = [self.rssfeeds copy];
+    pageContentViewController.pageIndex = index;
+    
+    
+    return pageContentViewController;
+}
+
+
+-(NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController
+{
+    return [self.rssfeeds count];
+}
+
+- (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController
+{
+    return 0;
+}
+
 
 @end

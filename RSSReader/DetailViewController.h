@@ -7,14 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PageContentViewController.h"
 
-@interface DetailViewController : UIViewController <UIGestureRecognizerDelegate>
+@interface DetailViewController : UIViewController < UIPageViewControllerDataSource>
 
 //@property (strong, nonatomic) UIPageViewController *pageViewController;
 @property (strong, nonatomic) NSMutableArray *rssfeeds;
 @property (strong, nonatomic) NSString *url;
 @property (weak, nonatomic) IBOutlet UIWebView *detailWebView;
-
+@property (strong, nonatomic) UIPageViewController *pageViewController;
 @property (weak, nonatomic) IBOutlet UILabel *article;
 @property NSInteger selected;
 @property (weak, nonatomic) IBOutlet UIButton *previous;
@@ -22,10 +23,5 @@
 - (IBAction)prev:(UIButton *)sender;
 - (IBAction)next:(UIButton *)sender;
 
--(void)slideToRightWithGestureRecognizer:(UISwipeGestureRecognizer *)gestureRecognizer;
 
--(void)slideToLeftWithGestureRecognizer:(UISwipeGestureRecognizer *)gestureRecognizer;
-
-@property UISwipeGestureRecognizer *swipeRight;
-@property UISwipeGestureRecognizer *swipeLeft;
 @end
