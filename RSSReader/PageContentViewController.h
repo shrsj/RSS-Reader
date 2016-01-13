@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TOWebViewController.h"
+
 
 @interface PageContentViewController : UIViewController
 

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "PageContentViewController.h"
-
+#import "TOWebViewController.h"
 
 @interface DetailViewController : UIViewController < UIPageViewControllerDataSource>
 
