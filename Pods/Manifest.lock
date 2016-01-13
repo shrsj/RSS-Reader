@@ -1,0 +1,17 @@
+PODS:
+  - SDWebImage (3.7.4):
+    - SDWebImage/Core (= 3.7.4)
+  - SDWebImage/Core (3.7.4)
+  - TOWebViewController (2.2.2):
+    - TOWebViewController/Core (= 2.2.2)
+  - TOWebViewController/Core (2.2.2)
+
+DEPENDENCIES:
+  - SDWebImage (~> 3.7)
+  - TOWebViewController
+
+SPEC CHECKSUMS:
+  SDWebImage: 247edd7dd80dd6124197b0d6a17846fe9d1df968
+  TOWebViewController: 7250caf720b8b96b4f02bcff0fef168ae290a0d9
+
+COCOAPODS: 0.39.0
