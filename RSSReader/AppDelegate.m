@@ -25,15 +25,10 @@
     
     
     
-    /*    NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:2 * 1024 * 1024
-     diskCapacity:100 * 1024 * 1024
-     diskPath:nil];
-     [NSURLCache setSharedURLCache:sharedCache];
-     */
-    CustomURLCache *URLCache = [[CustomURLCache alloc] initWithMemoryCapacity:2 * 1024 * 1024
-                                                                 diskCapacity:100 * 1024 * 1024
-                                                                     diskPath:nil];
-    [NSURLCache setSharedURLCache:URLCache];
+    NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:2 * 1024 * 1024
+                                                            diskCapacity:100 * 1024 * 1024
+                                                                diskPath:nil];
+    [NSURLCache setSharedURLCache:sharedCache];
     
     NSLog(@"DiskCache: %@ of %@", @([[NSURLCache sharedURLCache] currentDiskUsage]), @([[NSURLCache sharedURLCache] diskCapacity]));
     NSLog(@"MemoryCache: %@ of %@", @([[NSURLCache sharedURLCache] currentMemoryUsage]), @([[NSURLCache sharedURLCache] memoryCapacity]));

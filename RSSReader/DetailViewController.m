@@ -28,15 +28,10 @@
     // Create page view controller
     self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PageViewController"];
     self.pageViewController.dataSource = self;
-    
-    TOWebViewController *startingViewController = [self viewControllerAtIndex:selectedRow];
+    PageContentViewController *startingViewController = [self viewControllerAtIndex:selectedRow];
     NSArray *viewControllers = @[startingViewController];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     
-    /* PageContentViewController *startingViewController = [self viewControllerAtIndex:selectedRow];
-     NSArray *viewControllers = @[startingViewController];
-     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
-     */
     // Change the size of page view controller
     self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 50);
     
@@ -58,13 +53,9 @@
         selectedRow = selectedRow - 1;
         NSString *plabel = [NSString stringWithFormat:@" Article %ld of %lu ",((long)selectedRow+1),(unsigned long)[self.rssfeeds count]];
         self.article.text = plabel;
-        TOWebViewController *startingViewController  = [self viewControllerAtIndex:selectedRow];
+        PageContentViewController *startingViewController = [self viewControllerAtIndex:selectedRow];
         NSArray *viewControllers = @[startingViewController];
         [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
-        /*
-         PageContentViewController *startingViewController = [self viewControllerAtIndex:selectedRow];
-         NSArray *viewControllers = @[startingViewController];
-         [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];*/
     }
     else{
         NSLog(@"U cant read articles before the beginning of what begins ;) ");
@@ -81,13 +72,11 @@
         self.article.text = plabel;
         
         //reload the webview
-        TOWebViewController *startingViewController  = [self viewControllerAtIndex:selectedRow];
+        
+        
+        PageContentViewController *startingViewController = [self viewControllerAtIndex:selectedRow];
         NSArray *viewControllers = @[startingViewController];
-        [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
-        /*
-         PageContentViewController *startingViewController = [self viewControllerAtIndex:selectedRow];
-         NSArray *viewControllers = @[startingViewController];
-         [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];*/
+        [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
     }
     else
     {
@@ -139,7 +128,7 @@
     }
 }
 
-- (TOWebViewController *)viewControllerAtIndex:(NSUInteger)index
+- (PageContentViewController *)viewControllerAtIndex:(NSUInteger)index
 {
     if (([self.rssfeeds count] == 0) || (index >= [self.rssfeeds count]))
     {
@@ -147,18 +136,13 @@
     }
     
     // Create a new view controller and pass suitable data.
-    /* PageContentViewController *pageContentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PageContentViewController"];
-     pageContentViewController.webUrl = [self.rssfeeds[index] objectForKey:@"link"];
-     pageContentViewController.rssfeeds = [self.rssfeeds copy];
-     //pageContentViewController.labelText = [self.rssfeeds[index] objectAtIndex:@"description"];
-     pageContentViewController.pageIndex = index;*/
+    PageContentViewController *pageContentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PageContentViewController"];
+    pageContentViewController.webUrl = [self.rssfeeds[index] objectForKey:@"link"];
+    pageContentViewController.rssfeeds = [self.rssfeeds copy];
+    pageContentViewController.pageIndex = index;
     
-    NSString *webUrl = [self.rssfeeds[index] objectForKey:@"link"];
-    NSString *link = [webUrl stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    NSCharacterSet *customCharacterset = [[NSCharacterSet characterSetWithCharactersInString:@" "] invertedSet];
-    NSURL *myURL = [NSURL URLWithString: [link stringByAddingPercentEncodingWithAllowedCharacters:customCharacterset]];
-    TOWebViewController *webViewContoller  = [[TOWebViewController alloc]initWithURL:myURL];
-    return webViewContoller;
+    
+    return pageContentViewController;
 }
 
 

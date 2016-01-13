@@ -27,7 +27,6 @@
     NSMutableString *previewImage;
     NSString *previewImage1;
     NSMutableString *subtitle;
-    MBProgressHUD *HUD;
 }
 
 @end
@@ -38,31 +37,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.imageCache = [[NSCache alloc] init];                                                                 //Initialise image cache
-    
-    
-    // The hud will dispable all input on the view (use the higest view possible in the view hierarchy)
-    HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:HUD];
-    // Regiser for HUD callbacks so we can remove it from the window at the right time
-    HUD.delegate = self;
-    HUD.labelText = @"Loading...";
-    [self.view.window addSubview:HUD];
+    self.imageCache = [[NSCache alloc] init];
     feeds = [[NSMutableArray alloc] init];
-    NSLog(@"starting progress bar");
-    
-    //NSInvocationOperation *op = [[NSInvocationOperation alloc ] initWithTarget:self selector:@selector(loadfeeds) object:Nil];
-    /*  NSOperationQueue* aQueue = [[NSOperationQueue alloc] init];
-     [aQueue addOperationWithBlock:^{
-     
-     [self loadfeeds];
-     [NSObject performSelectorInBackground:@selector(loadfeeds) withObject:Nil];
-     [NSObject performSelectorOnMainThread:withObject:waitUntilDone:]
-     
-     }];*/
-    // [HUD showWhileExecuting:@selector(loadfeeds) onTarget:self withObject:Nil animated:YES];
-    //self.activityIndi.frame = CGRectMake(200, 200, 20, 20);
-    //[self.tableView addSubview:self.activityIndi];
     [self loadfeeds];
 }
 
@@ -107,9 +83,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    NSLog(@"cell for row at index entered");
-    // NSLog(@"inside cell for row at indexpath");
     FeedsTableViewCell *cell = [[FeedsTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
     cell.textLabel.numberOfLines = 1;
     cell.textLabel.text = [[feeds objectAtIndex:indexPath.row] objectForKey: @"title"];
@@ -121,41 +94,7 @@
     
     NSString *linked = [[feeds objectAtIndex:indexPath.row] objectForKey:@"content:encoded"];
     NSURL *iurl = [NSURL URLWithString:linked];
-    // NSString *path = [NSString stringWithFormat:@"%ld",(long)[indexPath row]];
-    //NSData *imageData = [NSData dataWithContentsOfURL:iurl];
-    
     [cell.imageView sd_setImageWithURL:iurl placeholderImage:[UIImage imageNamed:@"no image"]];
-    /* SDWebImageDownloader *downloader = [SDWebImageDownloader sharedDownloader];
-     [downloader downloadImageWithURL:iurl
-     options:0
-     progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-     // progression tracking code
-     [cell.imageView setImage:[UIImage imageNamed:@"no image"]];
-     }
-     completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
-     if (image && finished) {
-     // do something with image
-     [cell.imageView setImage:image];
-     }
-     }];*/
-    /*
-     [SDWebImageDownloader.sharedDownloader downloadImageWithURL:iurl
-     options:0
-     progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-     // progression tracking code
-     [cell.imageView setImage:[UIImage imageNamed:@"no image"]];
-     }
-     completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished)
-     {
-     if (cell.tag == indexPath.row && image && finished)
-     {
-     dispatch_async(dispatch_get_main_queue(), ^(){
-     cell.imageView.image = image;
-     });
-     
-     }
-     }];
-     */
     return cell;
 }
 
@@ -163,7 +102,6 @@
 {
     DetailViewController *details = [[DetailViewController alloc] init];
     details.url = [feeds[indexPath.row] objectForKey:@"link"];
-    //NSLog(@"%@ %ld",[feeds[indexPath.row] objectForKey:@"link"],(long)indexPath.row);
     [self performSegueWithIdentifier:@"viewDetail" sender:self];
     
 }
@@ -224,13 +162,10 @@
             NSRange endRange = [[previewImage substringFromIndex:firstRange.location] rangeOfString:@"\" alt"];
             NSString *finalLink = [[NSString alloc] init];
             finalLink = [previewImage substringWithRange:NSMakeRange(firstRange.location, endRange.location)];
-            //NSString *finalLink = [previewImage substringWithRange:NSMakeRange(firstRange.location, endRange.location)];
             NSString *match = @"src=\"";
-            //NSString *match2 = @"\"";
             NSString *postMatch;
             NSScanner *scanner = [NSScanner scannerWithString:finalLink];
             [scanner scanString:match intoString:nil];
-            //[scanner scanString:match2 intoString:nil];
             postMatch = [finalLink substringFromIndex:scanner.scanLocation];
             NSString *finalURL = [postMatch stringByAppendingString:@""];
             previewImage1 = finalURL;

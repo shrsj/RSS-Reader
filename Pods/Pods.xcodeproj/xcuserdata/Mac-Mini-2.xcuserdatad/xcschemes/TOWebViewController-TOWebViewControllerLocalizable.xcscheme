@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'DBA46C0B26FAB46EC2A6151C'
-               BlueprintName = 'MBProgressHUD'
+               BlueprintIdentifier = 'FB533D3372EA7CF595F78BA1'
+               BlueprintName = 'TOWebViewController-TOWebViewControllerLocalizable'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libMBProgressHUD.a'>
+               BuildableName = 'TOWebViewControllerLocalizable.bundle'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
