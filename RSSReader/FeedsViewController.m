@@ -27,7 +27,6 @@
     NSMutableString *previewImage;
     NSString *previewImage1;
     NSMutableString *subtitle;
-    MBProgressHUD *HUD;
 }
 
 @end
@@ -41,28 +40,9 @@
     self.imageCache = [[NSCache alloc] init];                                                                 //Initialise image cache
     
     
-    // The hud will dispable all input on the view (use the higest view possible in the view hierarchy)
-    HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:HUD];
-    // Regiser for HUD callbacks so we can remove it from the window at the right time
-    HUD.delegate = self;
-    HUD.labelText = @"Loading...";
-    [self.view.window addSubview:HUD];
     feeds = [[NSMutableArray alloc] init];
     NSLog(@"starting progress bar");
     
-    //NSInvocationOperation *op = [[NSInvocationOperation alloc ] initWithTarget:self selector:@selector(loadfeeds) object:Nil];
-    /*  NSOperationQueue* aQueue = [[NSOperationQueue alloc] init];
-     [aQueue addOperationWithBlock:^{
-     
-     [self loadfeeds];
-     [NSObject performSelectorInBackground:@selector(loadfeeds) withObject:Nil];
-     [NSObject performSelectorOnMainThread:withObject:waitUntilDone:]
-     
-     }];*/
-    // [HUD showWhileExecuting:@selector(loadfeeds) onTarget:self withObject:Nil animated:YES];
-    //self.activityIndi.frame = CGRectMake(200, 200, 20, 20);
-    //[self.tableView addSubview:self.activityIndi];
     [self loadfeeds];
 }
 

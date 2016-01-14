@@ -33,10 +33,6 @@
     NSArray *viewControllers = @[startingViewController];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     
-    /* PageContentViewController *startingViewController = [self viewControllerAtIndex:selectedRow];
-     NSArray *viewControllers = @[startingViewController];
-     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
-     */
     // Change the size of page view controller
     self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 50);
     
@@ -61,10 +57,6 @@
         TOWebViewController *startingViewController  = [self viewControllerAtIndex:selectedRow];
         NSArray *viewControllers = @[startingViewController];
         [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
-        /*
-         PageContentViewController *startingViewController = [self viewControllerAtIndex:selectedRow];
-         NSArray *viewControllers = @[startingViewController];
-         [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];*/
     }
     else{
         NSLog(@"U cant read articles before the beginning of what begins ;) ");
@@ -84,10 +76,6 @@
         TOWebViewController *startingViewController  = [self viewControllerAtIndex:selectedRow];
         NSArray *viewControllers = @[startingViewController];
         [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
-        /*
-         PageContentViewController *startingViewController = [self viewControllerAtIndex:selectedRow];
-         NSArray *viewControllers = @[startingViewController];
-         [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];*/
     }
     else
     {
@@ -146,12 +134,7 @@
         return nil;
     }
     
-    // Create a new view controller and pass suitable data.
-    /* PageContentViewController *pageContentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PageContentViewController"];
-     pageContentViewController.webUrl = [self.rssfeeds[index] objectForKey:@"link"];
-     pageContentViewController.rssfeeds = [self.rssfeeds copy];
-     //pageContentViewController.labelText = [self.rssfeeds[index] objectAtIndex:@"description"];
-     pageContentViewController.pageIndex = index;*/
+    // Create a new view controller and pass suitable data
     
     NSString *webUrl = [self.rssfeeds[index] objectForKey:@"link"];
     NSString *link = [webUrl stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];

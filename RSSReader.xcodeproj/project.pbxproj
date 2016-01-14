@@ -15,7 +15,6 @@
 		C4664E561C3FBBBE00830620 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = C4664E551C3FBBBE00830620 /* loading.gif */; };
 		C4CFF8691C1EBDBB0029FD90 /* TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CFF8681C1EBDBB0029FD90 /* TableViewCell.m */; };
 		C4CFF8701C1EC8B00029FD90 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CFF86F1C1EC8B00029FD90 /* DetailViewController.m */; };
-		C4DDAA9B1C28327A0028963A /* PageContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4DDAA9A1C28327A0028963A /* PageContentViewController.m */; };
 		C4E3963A1C19BD8E007EC929 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C4E396391C19BD8E007EC929 /* main.m */; };
 		C4E3963D1C19BD8E007EC929 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C4E3963C1C19BD8E007EC929 /* AppDelegate.m */; };
 		C4E396431C19BD8E007EC929 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4E396411C19BD8E007EC929 /* Main.storyboard */; };
@@ -28,7 +27,6 @@
 		C4E5D7111C1AA46C001C2798 /* FeedsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4E5D7101C1AA46C001C2798 /* FeedsViewController.m */; };
 		C4E5D7161C1AB21F001C2798 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4E5D7151C1AB21F001C2798 /* MessageUI.framework */; };
 		C4E6565E1C3CEDD5001E8B7E /* rssCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4E6565D1C3CEDD5001E8B7E /* rssCollectionViewController.m */; };
-		C4E6D4C61C451A520026E735 /* CustomURLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C4E6D4C51C451A520026E735 /* CustomURLCache.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,8 +61,6 @@
 		C4CFF8681C1EBDBB0029FD90 /* TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewCell.m; sourceTree = "<group>"; };
 		C4CFF86E1C1EC8B00029FD90 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		C4CFF86F1C1EC8B00029FD90 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
-		C4DDAA991C28327A0028963A /* PageContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageContentViewController.h; sourceTree = "<group>"; };
-		C4DDAA9A1C28327A0028963A /* PageContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageContentViewController.m; sourceTree = "<group>"; };
 		C4E396351C19BD8E007EC929 /* RSSReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSSReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4E396391C19BD8E007EC929 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C4E3963B1C19BD8E007EC929 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -88,8 +84,6 @@
 		C4E5D7151C1AB21F001C2798 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		C4E6565C1C3CEDD5001E8B7E /* rssCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rssCollectionViewController.h; sourceTree = "<group>"; };
 		C4E6565D1C3CEDD5001E8B7E /* rssCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = rssCollectionViewController.m; sourceTree = "<group>"; };
-		C4E6D4C41C451A520026E735 /* CustomURLCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomURLCache.h; sourceTree = "<group>"; };
-		C4E6D4C51C451A520026E735 /* CustomURLCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomURLCache.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,10 +179,6 @@
 				C4E5D7101C1AA46C001C2798 /* FeedsViewController.m */,
 				C4CFF86E1C1EC8B00029FD90 /* DetailViewController.h */,
 				C4CFF86F1C1EC8B00029FD90 /* DetailViewController.m */,
-				C4E6D4C41C451A520026E735 /* CustomURLCache.h */,
-				C4E6D4C51C451A520026E735 /* CustomURLCache.m */,
-				C4DDAA991C28327A0028963A /* PageContentViewController.h */,
-				C4DDAA9A1C28327A0028963A /* PageContentViewController.m */,
 				C4E396411C19BD8E007EC929 /* Main.storyboard */,
 				C4E396461C19BD8E007EC929 /* LaunchScreen.storyboard */,
 				C4E396491C19BD8E007EC929 /* Info.plist */,
@@ -407,10 +397,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4E5D70D1C1AA3A9001C2798 /* ContactViewController.m in Sources */,
-				C4E6D4C61C451A520026E735 /* CustomURLCache.m in Sources */,
 				C4E6565E1C3CEDD5001E8B7E /* rssCollectionViewController.m in Sources */,
 				C4CFF8701C1EC8B00029FD90 /* DetailViewController.m in Sources */,
-				C4DDAA9B1C28327A0028963A /* PageContentViewController.m in Sources */,
 				C4E5D70A1C1A9DAE001C2798 /* SubmitViewController.m in Sources */,
 				C40A6D731C3D01E500B731DA /* rssCollectionViewCell.m in Sources */,
 				C4E5D7111C1AA46C001C2798 /* FeedsViewController.m in Sources */,
