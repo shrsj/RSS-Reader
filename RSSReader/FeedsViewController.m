@@ -26,17 +26,17 @@
     //variable to parse description and image link
     NSMutableString *previewImage;
     NSString *previewImage1;
-    NSMutableString *subtitle;
+    NSMutableAttributedString *subtitle;
 }
 
 @end
 
 @implementation FeedsViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
     self.imageCache = [[NSCache alloc] init];
     feeds = [[NSMutableArray alloc] init];
     [self loadfeeds];
@@ -47,19 +47,16 @@
     NSOperationQueue* aQueue = [[NSOperationQueue alloc] init];
     [aQueue addOperationWithBlock:^{
         [self.activityIndi startAnimating];
-        NSLog(@"Beginning operation.\n");
+        // NSLog(@"Beginning operation.\n");
         // Do some work.
         NSURL *url = [NSURL URLWithString:self.url];
         parser = [[NSXMLParser alloc] initWithContentsOfURL:url];
         [parser setDelegate:self];
         [parser setShouldResolveExternalEntities:NO];
-        NSLog(@"parsing started in block");
         [parser parse];
-        
-        
     }];
-    
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -87,10 +84,11 @@
     cell.textLabel.numberOfLines = 1;
     cell.textLabel.text = [[feeds objectAtIndex:indexPath.row] objectForKey: @"title"];
     
-    NSString *normalSubtitle = [[feeds objectAtIndex:indexPath.row] objectForKey:@"description"];
-    NSString *data= [normalSubtitle stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSAttributedString *normalSubtitle = [[feeds objectAtIndex:indexPath.row] objectForKey:@"description"];
+    // NSString *data= [normalSubtitle stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     cell.detailTextLabel.numberOfLines = 3;
-    cell.detailTextLabel.text = data;
+    //NSAttributedString *content = [self convertHtmlToAttributedText:data];
+    cell.detailTextLabel.attributedText = normalSubtitle;
     
     NSString *linked = [[feeds objectAtIndex:indexPath.row] objectForKey:@"image"];
     NSURL *iurl = [NSURL URLWithString:linked];
@@ -117,10 +115,9 @@
         item    = [[NSMutableDictionary alloc] init];
         title   = [[NSMutableString alloc] init];
         link    = [[NSMutableString alloc] init];
-        subtitle = [[NSMutableString alloc] init];
+        subtitle = [[NSMutableAttributedString alloc] init];
         previewImage = [[NSMutableString alloc] init];
         previewImage1 = [[NSString alloc] init];
-        NSLog(@"parsing started in didstartelement block %@",link);
     }
 }
 
@@ -133,7 +130,6 @@
         [item setObject:subtitle forKey:@"description"];
         [item setObject:previewImage1 forKey:@"image"];
         [feeds addObject:[item copy]];
-        NSLog(@"parsing started in did End element block");
     }
 }
 
@@ -152,11 +148,13 @@
     {
         if ([string rangeOfString:@"\u2026<p>"].location != NSNotFound)
         {
-            
             NSRange endRange = [[string substringFromIndex:0] rangeOfString:@"\u2026<p>"];
-            NSString *finalString = [[NSString alloc] init];
-            finalString = [string substringWithRange:NSMakeRange(0, endRange.location)];
-            [subtitle appendString:finalString];
+            NSString *finalString = [string substringWithRange:NSMakeRange(0, endRange.location)];
+            [subtitle appendAttributedString:[self convertHtmlToAttributedText:finalString]];
+        }
+        else
+        {
+            [subtitle appendAttributedString:[self convertHtmlToAttributedText:string]];
         }
         
     }
@@ -180,17 +178,11 @@
         //code to capture image
         
     }
-    NSLog(@"parsing in foundCharacters block");
-    
 }
 
 
 - (void)parserDidEndDocument:(NSXMLParser *)parser
 {
-    NSLog(@"parsing started didend document in block");
-    //[self.tableView reloadData];
-    
-    NSLog(@"Reload Complete");
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
         [self.activityIndi stopAnimating];
@@ -216,14 +208,28 @@
     }
 }
 
+#pragma mark String Functions
 
--(NSString *)stringByStrippingHTML {
-    NSRange r;
-    NSString *s = [self copy];
-    while ((r = [s rangeOfString:@"<[^>]+>" options:NSRegularExpressionSearch]).location != NSNotFound)
-        s = [s stringByReplacingCharactersInRange:r withString:@""];
-    return s;
+-(NSAttributedString *)convertHtmlToAttributedText:(NSString *)content
+{
+    NSData *stringData = [content dataUsingEncoding:NSUTF32StringEncoding];
+    NSDictionary *options = @{NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType};
+    NSAttributedString *decodedString;
+    decodedString = [[NSAttributedString alloc] initWithData:stringData
+                                                     options:options
+                                          documentAttributes:NULL
+                                                       error:NULL];
+    return decodedString;
 }
 
+/*
+ -(NSString *)stringByStrippingHTML {
+ NSRange r;
+ NSString *s = [self copy];
+ while ((r = [s rangeOfString:@"<[^>]+>" options:NSRegularExpressionSearch]).location != NSNotFound)
+ s = [s stringByReplacingCharactersInRange:r withString:@""];
+ return s;
+ }
+ */
 @end
 

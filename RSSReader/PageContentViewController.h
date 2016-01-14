@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-
 @interface PageContentViewController : UIViewController
 
 @property NSUInteger pageIndex;
@@ -19,4 +18,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *Title;
 @property (weak, nonatomic) IBOutlet UITextView *articleContent;
 @property (weak, nonatomic) IBOutlet UIImageView *Image;
+
+-(NSAttributedString *)convertHtmlToAttributedText:(NSString *)content;
 @end

@@ -133,10 +133,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gkb-CM-fN0">
-                                <rect key="frame" x="125" y="76" width="350" height="180"/>
+                                <rect key="frame" x="180" y="76" width="240" height="180"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="180" id="ukR-gi-I5Q"/>
-                                    <constraint firstAttribute="width" constant="350" id="yXE-MD-73k"/>
+                                    <constraint firstAttribute="height" constant="180" id="gTk-uz-dnu"/>
+                                    <constraint firstAttribute="width" secondItem="gkb-CM-fN0" secondAttribute="height" multiplier="4:3" id="rYs-LA-B0b"/>
                                 </constraints>
                             </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" keyboardDismissMode="interactive" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ash-ag-nCf">
@@ -149,10 +149,8 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Ash-ag-nCf" firstAttribute="top" secondItem="gkb-CM-fN0" secondAttribute="bottom" constant="8" symbolic="YES" id="3Xy-Ie-3iy"/>
                             <constraint firstItem="Ash-ag-nCf" firstAttribute="centerX" secondItem="et5-fZ-60m" secondAttribute="centerX" id="9Fu-is-cFa"/>
                             <constraint firstItem="XkQ-4M-iAj" firstAttribute="top" secondItem="Ash-ag-nCf" secondAttribute="bottom" constant="8" symbolic="YES" id="IM5-if-cVA"/>
-                            <constraint firstItem="gkb-CM-fN0" firstAttribute="top" secondItem="JOT-Kb-P4b" secondAttribute="bottom" constant="8" symbolic="YES" id="KZZ-Pq-y4P"/>
                             <constraint firstAttribute="trailing" secondItem="JOT-Kb-P4b" secondAttribute="trailing" constant="20" symbolic="YES" id="MPe-pC-bBy"/>
                             <constraint firstItem="Ash-ag-nCf" firstAttribute="top" secondItem="gkb-CM-fN0" secondAttribute="bottom" constant="8" symbolic="YES" id="WPy-mV-YQW"/>
                             <constraint firstItem="JOT-Kb-P4b" firstAttribute="top" secondItem="hN3-z0-eOv" secondAttribute="bottom" constant="8" symbolic="YES" id="d4P-xd-Bah"/>

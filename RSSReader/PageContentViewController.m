@@ -12,8 +12,6 @@
 
 @interface PageContentViewController ()
 
-@property (strong) UIView *detailWebView;
-
 @end
 
 @implementation PageContentViewController
@@ -27,13 +25,9 @@
     NSURL *iurl = [NSURL URLWithString:linked];
     [self.Image sd_setImageWithURL:iurl placeholderImage:[UIImage imageNamed:@"no image"]];
     NSString *description = [self.rssfeeds[self.pageIndex] objectForKey:@"description"];
-    NSString *desc = [NSString stringWithString:[description stringByRemovingPercentEncoding]];
-    self.articleContent.text = desc;
+    NSAttributedString *decodedString = [self convertHtmlToAttributedText:description];
+    self.articleContent.attributedText = decodedString;
     //set the url
-    NSLog(@"Feeeds are %@", self.rssfeeds[self.pageIndex]);
-    
-    NSLog(@"DiskCache: %@ of %@", @([[NSURLCache sharedURLCache] currentDiskUsage]), @([[NSURLCache sharedURLCache] diskCapacity]));
-    NSLog(@"MemoryCache: %@ of %@", @([[NSURLCache sharedURLCache] currentMemoryUsage]), @([[NSURLCache sharedURLCache] memoryCapacity]));
 }
 
 - (void)didReceiveMemoryWarning {
@@ -41,4 +35,17 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+
+-(NSAttributedString *)convertHtmlToAttributedText:(NSAttributedString *)content
+{
+    NSData *stringData = [[content string] dataUsingEncoding:NSUTF32StringEncoding];
+    NSDictionary *options = @{NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType};
+    NSAttributedString *decodedString;
+    decodedString = [[NSAttributedString alloc] initWithData:stringData
+                                                     options:options
+                                          documentAttributes:NULL
+                                                       error:NULL];
+    return decodedString;
+}
 @end

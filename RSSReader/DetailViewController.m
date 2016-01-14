@@ -134,14 +134,11 @@
     {
         return nil;
     }
-    
     // Create a new view controller and pass suitable data.
     PageContentViewController *pageContentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PageContentViewController"];
     pageContentViewController.webUrl = [self.rssfeeds[index] objectForKey:@"link"];
     pageContentViewController.rssfeeds = [self.rssfeeds copy];
     pageContentViewController.pageIndex = index;
-    
-    
     return pageContentViewController;
 }
 

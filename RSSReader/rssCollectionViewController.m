@@ -34,8 +34,6 @@ static NSString * const reuseIdentifier = @"Cell";
     // Register cell classes
     //[self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
     
-    // Do any additional setup after loading the view.
-    
     feedTypes = @[@"News" ,@"Sports" ,@"Birthday" ,@"Obit" ,@"Contact Us",@"Submit Story"];
     fillImages = @[@"NewsFill",@"SportsFill" ,@"BirthdayFill" ,@"ObitFill" ,@"Contact UsFill",@"Submit StoryFill"];
     feedLinks = @[@"http://www.ozarkareanetwork.com/category/app-feed/feed/rss2", @"http://www.ozarkareanetwork.com/category/sports/feed/rss2", @"http://www.ozarkareanetwork.com/category/birthdays-anniversaries/feed/rss2",@"http://www.ozarkareanetwork.com/category/obits/feed/rss2"];
@@ -74,7 +72,6 @@ static NSString * const reuseIdentifier = @"Cell";
 {
     
     [self setHighlighted:YES :indexPath];
-    NSLog(@"Heya this is selected");
     if ([indexPath row] < 4)
     {
         FeedsViewController *feeds = [self.storyboard instantiateViewControllerWithIdentifier:@"feeds"];
@@ -95,19 +92,6 @@ static NSString * const reuseIdentifier = @"Cell";
     [collectionView reloadData];
 }
 
--(void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    /*  rssCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
-     cell.feedSymbol.image = [UIImage imageNamed:[fillImages objectAtIndex:[indexPath row]]];*/
-    NSLog(@"Hi this is highlighted");
-}
-
-
--(void)collectionView:(UICollectionView *)collectionView didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath
-{
-}
-
-
 -(void)setHighlighted:(BOOL)highlighted
                      :(NSIndexPath*)selectedPath
 {
@@ -125,35 +109,5 @@ static NSString * const reuseIdentifier = @"Cell";
     }
 }
 
-#pragma mark <UICollectionViewDelegate>
-
-/*
- // Uncomment this method to specify if the specified item should be highlighted during tracking
- - (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-	return YES;
- }
- */
-
-/*
- // Uncomment this method to specify if the specified item should be selected
- - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
- return YES;
- }
- */
-
-/*
- // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
- - (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
-	return NO;
- }
- 
- - (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	return NO;
- }
- 
- - (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	
- }
- */
 
 @end
