@@ -9,25 +9,43 @@
 #import "PageContentViewController.h"
 #import "AppDelegate.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "TFHpple.h"
+
+#define DELEGATE ((AppDelegate*)[[UIApplication sharedApplication]delegate])
 
 @interface PageContentViewController ()
-
+{
+    TFHpple *parser;
+    NSMutableString *Content;                        //Contains article content
+}
 @end
 
 @implementation PageContentViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    //[self loadfeeds];
+    [self.activityIndi startAnimating];
+    AppDelegate *checkCache = DELEGATE;
+    NSString *link = self.webUrl;
+    if([[checkCache.articleCache allKeys] containsObject:link])
+    {
+        NSLog(@"Key Exists");
+        NSString *contents = [checkCache.articleCache valueForKey:link];
+        [self loadDataOnView:contents];
+    }
+    else
+    {
+        NSOperationQueue* aQueue = [[NSOperationQueue alloc] init];
+        [aQueue addOperationWithBlock:^{
+            NSLog(@"Key not Exists");
+            [self startParsing];
+        }];
+    }
     
-    self.Title.text = [self.rssfeeds[self.pageIndex] objectForKey:@"title"];
-    NSString *linked = [[self.rssfeeds objectAtIndex:self.pageIndex] objectForKey:@"image"];
-    NSURL *iurl = [NSURL URLWithString:linked];
-    [self.Image sd_setImageWithURL:iurl placeholderImage:[UIImage imageNamed:@"no image"]];
-    NSString *description = [self.rssfeeds[self.pageIndex] objectForKey:@"description"];
-    NSAttributedString *decodedString = [self convertHtmlToAttributedText:description];
-    self.articleContent.attributedText = decodedString;
-    //set the url
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -35,11 +53,30 @@
     // Dispose of any resources that can be recreated.
 }
 
-
-
--(NSAttributedString *)convertHtmlToAttributedText:(NSAttributedString *)content
+#pragma mark convert and display html in view methods
+-(void)loadDataOnView:(NSString *)ContentOfArticle
 {
-    NSData *stringData = [[content string] dataUsingEncoding:NSUTF32StringEncoding];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.Title.text = [self.rssfeeds[self.pageIndex] objectForKey:@"title"];
+        
+        //setting image
+        NSString *linked = [[self.rssfeeds objectAtIndex:self.pageIndex] objectForKey:@"image"];
+        NSURL *iurl = [NSURL URLWithString:linked];
+        [self.Image sd_setImageWithURL:iurl placeholderImage:[UIImage imageNamed:@"no image"]];
+        
+        //set the article content
+        
+        self.articleContent.attributedText = [self convertHtmlToAttributedText:ContentOfArticle];
+        [self.activityIndi stopAnimating];
+        self.activityIndi.hidden = TRUE;
+    });
+    
+    
+}
+
+-(NSAttributedString *)convertHtmlToAttributedText:(NSString *)content
+{
+    NSData *stringData = [content dataUsingEncoding:NSUTF32StringEncoding];
     NSDictionary *options = @{NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType};
     NSAttributedString *decodedString;
     decodedString = [[NSAttributedString alloc] initWithData:stringData
@@ -48,4 +85,35 @@
                                                        error:NULL];
     return decodedString;
 }
+
+-(void)startParsing
+{
+    //COnvert string to proper url
+    NSString *url = self.webUrl;
+    NSString* webString = [url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLPathAllowedCharacterSet]];
+    webString = [webString stringByReplacingOccurrencesOfString:@"%0A%09%09" withString:@""];
+    webString = [webString stringByReplacingOccurrencesOfString:@"%3A" withString:@":"];
+    NSURL *webString1 = [NSURL URLWithString:webString];
+    NSData *HtmlData = [NSData dataWithContentsOfURL:webString1];
+    
+    //parse the link
+    
+    parser = [TFHpple hppleWithHTMLData:HtmlData];
+    NSString *pathQuery = @"//div[@class='entry-content']/p";
+    NSArray *nodes = [parser searchWithXPathQuery:pathQuery];
+    Content =[[NSMutableString alloc] init];
+    
+    for(TFHppleElement *element in nodes)
+    {
+        [Content appendString:[element content]];
+    }
+    //NSAttributedString *attributedContent = [[NSAttributedString alloc] initWithString:Content];
+    [self loadDataOnView:Content];
+    
+    AppDelegate *checkCache = DELEGATE;
+    NSMutableDictionary *temp = [[NSMutableDictionary alloc] init];
+    [temp setObject:Content forKey:url];
+    checkCache.articleCache = [temp copy];
+}
+
 @end

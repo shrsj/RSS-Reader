@@ -10,10 +10,11 @@
 
 @interface AppDelegate ()
 
+
 @end
 
 @implementation AppDelegate
-
+@synthesize articleCache;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
@@ -26,6 +27,11 @@
                                                             diskCapacity:100 * 1024 * 1024
                                                                 diskPath:nil];
     [NSURLCache setSharedURLCache:sharedCache];
+    
+    /* NSURLCache *articleCache = [[NSURLCache alloc] initWithMemoryCapacity:2 * 1024 * 1024
+     diskCapacity:100 * 1024 * 1024
+     diskPath:nil];*/
+    
     NSLog(@"DiskCache: %@ of %@", @([[NSURLCache sharedURLCache] currentDiskUsage]), @([[NSURLCache sharedURLCache] diskCapacity]));
     NSLog(@"MemoryCache: %@ of %@", @([[NSURLCache sharedURLCache] currentMemoryUsage]), @([[NSURLCache sharedURLCache] memoryCapacity]));
     return YES;
@@ -51,6 +57,7 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    articleCache = nil;
 }
 
 @end

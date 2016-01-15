@@ -10,10 +10,6 @@
 #import "DetailViewController.h"
 #import "FeedsTableViewCell.h"
 
-
-#define kAppIconHeight 100
-#define kAppIconWidth 70
-
 @interface FeedsViewController ()
 {
     NSXMLParser *parser;

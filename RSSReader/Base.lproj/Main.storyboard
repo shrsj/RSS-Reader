@@ -123,26 +123,31 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumScaleFactor="0.59999999999999998" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JOT-Kb-P4b">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumScaleFactor="0.59999999999999998" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JOT-Kb-P4b">
                                 <rect key="frame" x="20" y="28" width="560" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="f38-ri-cFQ"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gkb-CM-fN0">
-                                <rect key="frame" x="180" y="76" width="240" height="180"/>
+                                <rect key="frame" x="200" y="76" width="200" height="150"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="180" id="gTk-uz-dnu"/>
+                                    <constraint firstAttribute="height" constant="150" id="gTk-uz-dnu"/>
                                     <constraint firstAttribute="width" secondItem="gkb-CM-fN0" secondAttribute="height" multiplier="4:3" id="rYs-LA-B0b"/>
                                 </constraints>
                             </imageView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="LaK-kc-OSe">
+                                <rect key="frame" x="282" y="226" width="37" height="37"/>
+                                <color key="backgroundColor" red="0.99356708855966891" green="1" blue="0.98270261008497994" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="color" red="0.19740079394700305" green="0.16154761590308253" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" keyboardDismissMode="interactive" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ash-ag-nCf">
-                                <rect key="frame" x="20" y="264" width="560" height="328"/>
+                                <rect key="frame" x="20" y="263" width="560" height="329"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardAppearance="alert"/>
                                 <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
                             </textView>
@@ -152,18 +157,21 @@
                             <constraint firstItem="Ash-ag-nCf" firstAttribute="centerX" secondItem="et5-fZ-60m" secondAttribute="centerX" id="9Fu-is-cFa"/>
                             <constraint firstItem="XkQ-4M-iAj" firstAttribute="top" secondItem="Ash-ag-nCf" secondAttribute="bottom" constant="8" symbolic="YES" id="IM5-if-cVA"/>
                             <constraint firstAttribute="trailing" secondItem="JOT-Kb-P4b" secondAttribute="trailing" constant="20" symbolic="YES" id="MPe-pC-bBy"/>
-                            <constraint firstItem="Ash-ag-nCf" firstAttribute="top" secondItem="gkb-CM-fN0" secondAttribute="bottom" constant="8" symbolic="YES" id="WPy-mV-YQW"/>
                             <constraint firstItem="JOT-Kb-P4b" firstAttribute="top" secondItem="hN3-z0-eOv" secondAttribute="bottom" constant="8" symbolic="YES" id="d4P-xd-Bah"/>
                             <constraint firstItem="Ash-ag-nCf" firstAttribute="leading" secondItem="et5-fZ-60m" secondAttribute="leading" constant="20" symbolic="YES" id="gFD-lc-efy"/>
+                            <constraint firstItem="LaK-kc-OSe" firstAttribute="centerX" secondItem="et5-fZ-60m" secondAttribute="centerX" id="h27-34-qIv"/>
                             <constraint firstItem="gkb-CM-fN0" firstAttribute="top" secondItem="JOT-Kb-P4b" secondAttribute="bottom" constant="8" symbolic="YES" id="jVG-sY-dnv"/>
                             <constraint firstItem="gkb-CM-fN0" firstAttribute="centerX" secondItem="et5-fZ-60m" secondAttribute="centerX" id="ktc-7g-OcQ"/>
+                            <constraint firstItem="LaK-kc-OSe" firstAttribute="top" secondItem="gkb-CM-fN0" secondAttribute="bottom" id="nDq-uv-nYh"/>
                             <constraint firstAttribute="trailing" secondItem="Ash-ag-nCf" secondAttribute="trailing" constant="20" symbolic="YES" id="sw9-M9-BVl"/>
+                            <constraint firstItem="Ash-ag-nCf" firstAttribute="top" secondItem="LaK-kc-OSe" secondAttribute="bottom" id="uyE-ks-QtL"/>
                             <constraint firstItem="JOT-Kb-P4b" firstAttribute="leading" secondItem="et5-fZ-60m" secondAttribute="leading" constant="20" symbolic="YES" id="yIT-MI-ijv"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="Image" destination="gkb-CM-fN0" id="yME-U7-QE2"/>
                         <outlet property="Title" destination="JOT-Kb-P4b" id="NyT-A3-pu2"/>
+                        <outlet property="activityIndi" destination="LaK-kc-OSe" id="ODQ-iQ-U2d"/>
                         <outlet property="articleContent" destination="Ash-ag-nCf" id="US3-6t-Peh"/>
                     </connections>
                 </viewController>

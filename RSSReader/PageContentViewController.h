@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface PageContentViewController : UIViewController
 
@@ -18,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *Title;
 @property (weak, nonatomic) IBOutlet UITextView *articleContent;
 @property (weak, nonatomic) IBOutlet UIImageView *Image;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndi;
 
 -(NSAttributedString *)convertHtmlToAttributedText:(NSString *)content;
 @end
