@@ -11,7 +11,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "TFHpple.h"
 
-#define DELEGATE ((AppDelegate*)[[UIApplication sharedApplication]delegate])
+#define CACHE ((AppDelegate*)[[UIApplication sharedApplication]delegate])
 
 @interface PageContentViewController ()
 {
@@ -28,16 +28,15 @@
     // Do any additional setup after loading the view.
     //[self loadfeeds];
     [self.activityIndi startAnimating];
-    AppDelegate *checkCache = DELEGATE;
+    AppDelegate *Cache = CACHE;
     
     NSString *link = self.webUrl;
-    id obj = [checkCache.articleCache objectForKey:link];
-    
+    id obj = [Cache.cache objectForKey:link];
     
     if(obj != NULL)
     {
         NSLog(@"Article in Cache");
-        NSString *contents = [checkCache.articleCache valueForKey:link];
+        NSString *contents = [Cache.cache objectForKey:link];
         [self loadDataOnView:contents];
     }
     else
@@ -114,9 +113,10 @@
     //NSAttributedString *attributedContent = [[NSAttributedString alloc] initWithString:Content];
     [self loadDataOnView:Content];
     
-    AppDelegate *checkCache = DELEGATE;
-    [checkCache.articleCache setObject:Content forKey:url];
-    NSLog(@"updated to cache, total articles in cache -- %lu",(unsigned long)[checkCache.articleCache count]);
+    
+    AppDelegate *Cache = CACHE;
+    [Cache.cache setObject:Content forKey:url];
+    NSLog(@"updated to cache, total articles in cache --  %@",Cache.cache);
     
 }
 

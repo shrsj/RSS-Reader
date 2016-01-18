@@ -14,12 +14,12 @@
 @end
 
 @implementation AppDelegate
-@synthesize articleCache;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    self.articleCache = [NSMutableDictionary new];
+    
+    self.cache = [NSCache new];
     
     UIPageControl *pageControl = [UIPageControl appearance];
     pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
@@ -29,10 +29,10 @@
     /*  NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:2 * 1024 * 1024
      diskCapacity:100 * 1024 * 1024
      diskPath:nil];
-     [NSURLCache setSharedURLCache:sharedCache];
-     
-     NSLog(@"DiskCache: %@ of %@", @([[NSURLCache sharedURLCache] currentDiskUsage]), @([[NSURLCache sharedURLCache] diskCapacity]));
-     NSLog(@"MemoryCache: %@ of %@", @([[NSURLCache sharedURLCache] currentMemoryUsage]), @([[NSURLCache sharedURLCache] memoryCapacity]));*/
+     [NSURLCache setSharedURLCache:sharedCache];*/
+    
+    NSLog(@"DiskCache: %@ of %@", @([[NSURLCache sharedURLCache] currentDiskUsage]), @([[NSURLCache sharedURLCache] diskCapacity]));
+    NSLog(@"MemoryCache: %@ of %@", @([[NSURLCache sharedURLCache] currentMemoryUsage]), @([[NSURLCache sharedURLCache] memoryCapacity]));
     return YES;
 }
 
@@ -56,7 +56,7 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    articleCache = nil;
+    self.cache = nil;
 }
 
 @end

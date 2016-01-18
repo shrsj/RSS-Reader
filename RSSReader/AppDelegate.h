@@ -11,7 +11,8 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) NSMutableDictionary *articleCache;
+
+@property (strong,nonatomic) NSCache *cache;
 
 @end
 
