@@ -29,10 +29,14 @@
     //[self loadfeeds];
     [self.activityIndi startAnimating];
     AppDelegate *checkCache = DELEGATE;
+    
     NSString *link = self.webUrl;
-    if([[checkCache.articleCache allKeys] containsObject:link])
+    id obj = [checkCache.articleCache objectForKey:link];
+    
+    
+    if(obj != NULL)
     {
-        NSLog(@"Key Exists");
+        NSLog(@"Article in Cache");
         NSString *contents = [checkCache.articleCache valueForKey:link];
         [self loadDataOnView:contents];
     }
@@ -40,7 +44,7 @@
     {
         NSOperationQueue* aQueue = [[NSOperationQueue alloc] init];
         [aQueue addOperationWithBlock:^{
-            NSLog(@"Key not Exists");
+            NSLog(@"Article not in Cache");
             [self startParsing];
         }];
     }
@@ -111,9 +115,9 @@
     [self loadDataOnView:Content];
     
     AppDelegate *checkCache = DELEGATE;
-    NSMutableDictionary *temp = [[NSMutableDictionary alloc] init];
-    [temp setObject:Content forKey:url];
-    checkCache.articleCache = [temp copy];
+    [checkCache.articleCache setObject:Content forKey:url];
+    NSLog(@"updated to cache, total articles in cache -- %lu",(unsigned long)[checkCache.articleCache count]);
+    
 }
 
 @end
