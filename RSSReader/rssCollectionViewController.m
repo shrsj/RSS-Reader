@@ -16,9 +16,6 @@
 {
     NSArray *feedTypes, *feedLinks, *fillImages;
 }
--(void)setHighlighted:(BOOL)highlighted
-                     :(NSIndexPath*)selectedPath;
-
 @end
 
 @implementation rssCollectionViewController
@@ -71,7 +68,7 @@ static NSString * const reuseIdentifier = @"Cell";
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    [self setHighlighted:YES :indexPath];
+    [self setHighlighted:YES :indexPath];  //change icon on select...
     if ([indexPath row] < 4)
     {
         FeedsViewController *feeds = [self.storyboard instantiateViewControllerWithIdentifier:@"feeds"];
@@ -92,20 +89,20 @@ static NSString * const reuseIdentifier = @"Cell";
     [collectionView reloadData];
 }
 
+
+// .....to be continued....
 -(void)setHighlighted:(BOOL)highlighted
                      :(NSIndexPath*)selectedPath
 {
     rssCollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:selectedPath];
-    if (highlighted)
+    if (highlighted)    // To change the icon when a cell is selected
     {
         cell.feedSymbol.image = [UIImage imageNamed:[fillImages objectAtIndex:[selectedPath row]]];
-        // Here what do you want.
     }
-    else
+    else   // if cell is not selected icon reverts back/or remains the same.
     {
         cell.feedLabel.text = [feedTypes objectAtIndex:[selectedPath row]];
         cell.feedSymbol.image = [UIImage imageNamed:[feedTypes objectAtIndex:[selectedPath row]]];
-        // Here all change need go back
     }
 }
 

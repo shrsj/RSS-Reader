@@ -21,12 +21,17 @@
     
     self.cache = [NSCache new];
     
-    UIPageControl *pageControl = [UIPageControl appearance];
-    pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
-    pageControl.currentPageIndicatorTintColor = [UIColor blackColor];
-    pageControl.backgroundColor = [UIColor whiteColor];
-    
-    /*  NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:2 * 1024 * 1024
+    /* 
+     //for setting color of pagview controller in transition style - scroll
+     
+     UIPageControl *pageControl = [UIPageControl appearance];
+     pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
+     pageControl.currentPageIndicatorTintColor = [UIColor blackColor];
+     pageControl.backgroundColor = [UIColor whiteColor];
+     
+     
+     
+     NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:2 * 1024 * 1024
      diskCapacity:100 * 1024 * 1024
      diskPath:nil];
      [NSURLCache setSharedURLCache:sharedCache];*/

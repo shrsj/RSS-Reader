@@ -25,18 +25,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    //[self loadfeeds];
+    // Do any additional setup after loading the view. 
     [self.activityIndi startAnimating];
-    AppDelegate *Cache = CACHE;
+    AppDelegate *appDelegate = CACHE;
     
     NSString *link = self.webUrl;
-    id obj = [Cache.cache objectForKey:link];
+    id obj = [appDelegate.cache objectForKey:link];
     
     if(obj != NULL)
     {
         NSLog(@"Article in Cache");
-        NSString *contents = [Cache.cache objectForKey:link];
+        NSString *contents = [appDelegate.cache objectForKey:link];
         [self loadDataOnView:contents];
     }
     else
@@ -114,9 +113,9 @@
     [self loadDataOnView:Content];
     
     
-    AppDelegate *Cache = CACHE;
-    [Cache.cache setObject:Content forKey:url];
-    NSLog(@"updated to cache, total articles in cache --  %@",Cache.cache);
+    AppDelegate *appDelegate = CACHE;
+    [appDelegate.cache setObject:Content forKey:url];
+    NSLog(@"updated to cache, total articles in cache --  %@",appDelegate.cache);
     
 }
 

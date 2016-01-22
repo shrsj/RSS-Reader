@@ -16,5 +16,5 @@
 @property (nonatomic, strong) NSCache *imageCache;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndi;
 
-
+-(void)displayAlert:(NSString *)msg;
 @end

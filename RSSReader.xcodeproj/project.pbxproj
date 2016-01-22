@@ -13,7 +13,6 @@
 		C45107761C43908F00325ADD /* FeedsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C45107751C43908F00325ADD /* FeedsTableViewCell.m */; };
 		C4664E541C3F973400830620 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4664E531C3F973400830620 /* Assets.xcassets */; };
 		C4664E561C3FBBBE00830620 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = C4664E551C3FBBBE00830620 /* loading.gif */; };
-		C4CFF8691C1EBDBB0029FD90 /* TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CFF8681C1EBDBB0029FD90 /* TableViewCell.m */; };
 		C4CFF8701C1EC8B00029FD90 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CFF86F1C1EC8B00029FD90 /* DetailViewController.m */; };
 		C4DDAA9B1C28327A0028963A /* PageContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4DDAA9A1C28327A0028963A /* PageContentViewController.m */; };
 		C4E3963A1C19BD8E007EC929 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C4E396391C19BD8E007EC929 /* main.m */; };
@@ -62,8 +61,6 @@
 		C45107751C43908F00325ADD /* FeedsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedsTableViewCell.m; sourceTree = "<group>"; };
 		C4664E531C3F973400830620 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = RSSReader/Assets.xcassets; sourceTree = "<group>"; };
 		C4664E551C3FBBBE00830620 /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
-		C4CFF8671C1EBDBB0029FD90 /* TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewCell.h; sourceTree = "<group>"; };
-		C4CFF8681C1EBDBB0029FD90 /* TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewCell.m; sourceTree = "<group>"; };
 		C4CFF86E1C1EC8B00029FD90 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		C4CFF86F1C1EC8B00029FD90 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		C4DDAA991C28327A0028963A /* PageContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageContentViewController.h; sourceTree = "<group>"; };
@@ -142,9 +139,10 @@
 		9B93557EF85F43DFA113E5D5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C4F9F4AB1C47B86300DE43E4 /* libxml2.tbd */,
+				C4E5D7151C1AB21F001C2798 /* MessageUI.framework */,
 				C40A6D741C3D347D00B731DA /* ImageIO.framework */,
 				C4E52A881C3AA5B4004B5281 /* CoreGraphics.framework */,
+				C4F9F4AB1C47B86300DE43E4 /* libxml2.tbd */,
 				17B52473F5EAF0C34AE77CB9 /* libPods.a */,
 			);
 			name = Frameworks;
@@ -153,11 +151,8 @@
 		C4E3962C1C19BD8E007EC929 = {
 			isa = PBXGroup;
 			children = (
-				C4CFF8671C1EBDBB0029FD90 /* TableViewCell.h */,
-				C4CFF8681C1EBDBB0029FD90 /* TableViewCell.m */,
 				C4E396371C19BD8E007EC929 /* RSSReader */,
 				C4664E531C3F973400830620 /* Assets.xcassets */,
-				C4E5D7151C1AB21F001C2798 /* MessageUI.framework */,
 				C4E396511C19BD8E007EC929 /* RSSReaderTests */,
 				C4E3965C1C19BD8E007EC929 /* RSSReaderUITests */,
 				C4E396361C19BD8E007EC929 /* Products */,
@@ -180,14 +175,14 @@
 			isa = PBXGroup;
 			children = (
 				C4F9F4A11C47B6FE00DE43E4 /* HTML Parser */,
+				C4F9F49F1C47B6B900DE43E4 /* UICollectionView */,
+				C4F9F4A01C47B6DB00DE43E4 /* ListtableViewController's */,
 				C4E3963B1C19BD8E007EC929 /* AppDelegate.h */,
 				C4E3963C1C19BD8E007EC929 /* AppDelegate.m */,
-				C4F9F49F1C47B6B900DE43E4 /* UICollectionView */,
 				C4E5D7081C1A9DAE001C2798 /* SubmitViewController.h */,
 				C4E5D7091C1A9DAE001C2798 /* SubmitViewController.m */,
 				C4E5D70B1C1AA3A9001C2798 /* ContactViewController.h */,
 				C4E5D70C1C1AA3A9001C2798 /* ContactViewController.m */,
-				C4F9F4A01C47B6DB00DE43E4 /* ListtableViewController's */,
 				C4CFF86E1C1EC8B00029FD90 /* DetailViewController.h */,
 				C4CFF86F1C1EC8B00029FD90 /* DetailViewController.m */,
 				C4DDAA991C28327A0028963A /* PageContentViewController.h */,
@@ -454,7 +449,6 @@
 				C4E5D7111C1AA46C001C2798 /* FeedsViewController.m in Sources */,
 				C4F9F4AA1C47B76D00DE43E4 /* XPathQuery.m in Sources */,
 				C4F9F4A81C47B76D00DE43E4 /* TFHpple.m in Sources */,
-				C4CFF8691C1EBDBB0029FD90 /* TableViewCell.m in Sources */,
 				C45107761C43908F00325ADD /* FeedsTableViewCell.m in Sources */,
 				C4E3963D1C19BD8E007EC929 /* AppDelegate.m in Sources */,
 				C4E3963A1C19BD8E007EC929 /* main.m in Sources */,

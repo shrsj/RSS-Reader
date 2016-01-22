@@ -23,8 +23,11 @@
     NSMutableString *previewImage;
     NSString *previewImage1;
     NSMutableAttributedString *subtitle;
+    NSOperationQueue* aQueue;
+    
+    BOOL parseStatus;
+    NSTimer *timeout;
 }
-
 @end
 
 @implementation FeedsViewController
@@ -35,22 +38,40 @@
     // Do any additional setup after loading the view.
     self.imageCache = [[NSCache alloc] init];
     feeds = [[NSMutableArray alloc] init];
+    timeout = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(cancelParsing) userInfo:nil repeats:YES];
     [self loadfeeds];
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [aQueue cancelAllOperations];
 }
 
 -(void)loadfeeds
 {
-    NSOperationQueue* aQueue = [[NSOperationQueue alloc] init];
-    [aQueue addOperationWithBlock:^{
+    aQueue = [[NSOperationQueue alloc] init];
+    
+    NSBlockOperation *operation = [[NSBlockOperation alloc] init]; // create operation
+    __weak NSBlockOperation *weakOperation = operation;             // avoiding reference cycle
+    
+    [operation addExecutionBlock:^{
+        
         [self.activityIndi startAnimating];
-        // NSLog(@"Beginning operation.\n");
-        // Do some work.
         NSURL *url = [NSURL URLWithString:self.url];
+        if ([weakOperation isCancelled]) {
+            return;
+        }
         parser = [[NSXMLParser alloc] initWithContentsOfURL:url];
         [parser setDelegate:self];
         [parser setShouldResolveExternalEntities:NO];
-        [parser parse];
+        if ([weakOperation isCancelled]) {
+            return;
+        }
+        parseStatus = [parser parse];
     }];
+    
+    [aQueue addOperation:operation];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -187,6 +208,8 @@
     });
     
 }
+
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     DetailViewController *sendDetails = segue.destinationViewController;
@@ -218,6 +241,50 @@
     return decodedString;
 }
 
+-(void)cancelParsing
+{
+    if (parseStatus)
+    {
+        NSLog(@"parser is working");
+    }
+    else
+    {
+        [aQueue cancelAllOperations];
+        [parser abortParsing];
+        [self displayAlert:@"The Website is Not Responding \n Do You want to go back??"];
+    }
+}
+
+
+-(void)displayAlert:(NSString *)msg
+{
+    UIAlertController * alert=   [UIAlertController
+                                  alertControllerWithTitle:@"RSS Feeds"
+                                  message:msg
+                                  preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* ok = [UIAlertAction
+                         actionWithTitle:@"OK"
+                         style:UIAlertActionStyleDefault
+                         handler:^(UIAlertAction * action)
+                         {
+                             [alert dismissViewControllerAnimated:YES completion:nil];
+                             [self.navigationController popToRootViewControllerAnimated:YES];
+                         }];
+    UIAlertAction* cancel = [UIAlertAction
+                             actionWithTitle:@"Cancel"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action)
+                             {
+                                 [alert dismissViewControllerAnimated:YES completion:nil];
+                             }];
+    
+    [alert addAction:ok];
+    [alert addAction:cancel];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
 /*
  -(NSString *)stringByStrippingHTML {
  NSRange r;
@@ -227,5 +294,57 @@
  return s;
  }
  */
+
+/*********** Direct implementation of NSOperation Queues without cancel operation
+ 
+ [aQueue addOperationWithBlock:^{
+ [self.activityIndi startAnimating];
+ // NSLog(@"Beginning operation.\n");
+ // Do some work.
+ NSURL *url = [NSURL URLWithString:self.url];
+ parser = [[NSXMLParser alloc] initWithContentsOfURL:url];
+ [parser setDelegate:self];
+ [parser setShouldResolveExternalEntities:NO];
+ [parser parse];
+ }];
+ 
+ ************/
+
+/******* method to cancel threads when timeout ********
+ 
+ - (NSOperation *)AaddOperationWithBlock:(void (^)(NSBlockOperation *operation))block timeout:(CGFloat)timeout timeoutBlock:(void (^)(void))timeoutBlock
+ {
+ NSBlockOperation *blockOperation = [[NSBlockOperation alloc] init];  // create operation
+ NSBlockOperation __weak *weakOperation = blockOperation;             // prevent strong reference cycle
+ 
+ // add call to caller's provided block, passing it a reference to this `operation`
+ // so the caller can check to see if the operation was canceled (i.e. if it timed out)
+ 
+ [blockOperation addExecutionBlock:^{
+ block(weakOperation);
+ }];
+ 
+ // add the operation to this queue
+ 
+ [aQueue addOperation:blockOperation];
+ 
+ // if unfinished after `timeout`, cancel it and call `timeoutBlock`
+ 
+ dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeout * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+ // if still in existence, and unfinished, then cancel it and call `timeoutBlock`
+ 
+ if (weakOperation && ![weakOperation isFinished]) {
+ [weakOperation cancel];
+ if (timeoutBlock) {
+ timeoutBlock();
+ }
+ }
+ });
+ 
+ return blockOperation;
+ }
+ 
+ ************/
+
 @end
 
