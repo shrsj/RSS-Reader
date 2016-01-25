@@ -188,6 +188,7 @@
     else if ([(id)textBox isKindOfClass:[UITextView class]])
     {
         [((UITextView*)textBox).layer addAnimation:animation forKey:@"shake"];
+        self.warning.text = @"Please Fill in the story";
     }
 }
 

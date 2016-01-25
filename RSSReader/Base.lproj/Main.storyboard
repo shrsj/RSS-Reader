@@ -487,7 +487,7 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0n9-Nt-1C2">
-                                <rect key="frame" x="126" y="248" width="348" height="299"/>
+                                <rect key="frame" x="133" y="260" width="334" height="287"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="0n9-Nt-1C2" secondAttribute="height" multiplier="9:6" id="THw-y0-4FB"/>
                                     <constraint firstAttribute="width" secondItem="0n9-Nt-1C2" secondAttribute="height" multiplier="7:6" id="alC-Gy-ao1"/>
@@ -518,7 +518,10 @@
                                 </variation>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kkx-Yu-f9z">
-                                <rect key="frame" x="20" y="240" width="560" height="0.0"/>
+                                <rect key="frame" x="20" y="240" width="560" height="12"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="12" id="uCi-be-7hY"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                 <color key="textColor" red="1" green="0.082387581560000006" blue="0.099482370350000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
