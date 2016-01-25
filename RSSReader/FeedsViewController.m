@@ -38,7 +38,7 @@
     // Do any additional setup after loading the view.
     self.imageCache = [[NSCache alloc] init];
     feeds = [[NSMutableArray alloc] init];
-    timeout = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(cancelParsing) userInfo:nil repeats:YES];
+    timeout = [NSTimer scheduledTimerWithTimeInterval:20 target:self selector:@selector(cancelParsing) userInfo:nil repeats:YES];
     [self loadfeeds];
 }
 

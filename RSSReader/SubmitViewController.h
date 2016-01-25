@@ -16,8 +16,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *author;
 @property (weak, nonatomic) IBOutlet UITextField *email;
 @property (weak, nonatomic) IBOutlet UIImageView *aimage;
+@property (weak, nonatomic) IBOutlet UILabel *warning;
 
 - (IBAction)send:(UIButton *)sender;
 - (IBAction)attach:(UIButton *)sender;
--(BOOL) isValidEmail:(NSString *)checkString;
 @end

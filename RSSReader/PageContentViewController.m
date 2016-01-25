@@ -46,8 +46,6 @@
             [self startParsing];
         }];
     }
-    
-    
 }
 
 - (void)didReceiveMemoryWarning {
